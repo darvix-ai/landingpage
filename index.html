@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>DarviX AI Engine</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#050708;
+    --panel:#0b0f13;
+    --cyan:#3fd9ff;
+    --cyan-dim:#1c5e6e;
+    --gunmetal:#2b3138;
+    --text:#e8f1f4;
+    --muted:#7a8a92;
+    --muted-dim:#4d5a60;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:'Inter',system-ui,sans-serif;
+    line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  h1,h2,h3{font-family:'Space Grotesk',system-ui,sans-serif;}
+  section{
+    padding:64px 24px;
+    max-width:520px;
+    margin:0 auto;
+    position:relative;
+  }
+  .glow-text{
+    color:var(--cyan);
+    text-shadow:0 0 18px rgba(63,217,255,0.55), 0 0 40px rgba(63,217,255,0.15);
+  }
+
+  /* ---------- Hero ---------- */
+  .hero{
+    min-height:92vh;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:flex-start;
+    text-align:left;
+    padding-top:40px;
+  }
+  .hero::before{
+    content:"";
+    position:absolute;
+    top:-10%; left:50%;
+    transform:translateX(-50%);
+    width:340px; height:340px;
+    background:radial-gradient(circle, rgba(63,217,255,0.14) 0%, rgba(63,217,255,0) 70%);
+    pointer-events:none;
+  }
+  .hero h1{
+    font-size:2.6rem;
+    font-weight:700;
+    line-height:1.1;
+    color:var(--text);
+  }
+  .hero h1 span{
+    display:block;
+    color:var(--cyan);
+    text-shadow:0 0 22px rgba(63,217,255,0.5);
+  }
+  .hero p{
+    margin-top:20px;
+    font-size:1.05rem;
+    color:var(--muted);
+    max-width:38ch;
+  }
+  .hero .tag{
+    margin-top:28px;
+    font-size:0.8rem;
+    letter-spacing:0.02em;
+    color:var(--muted-dim);
+    border-left:2px solid var(--cyan-dim);
+    padding-left:12px;
+  }
+
+  /* ---------- Section headers ---------- */
+  .section-head{
+    font-size:1.5rem;
+    font-weight:600;
+    margin-bottom:14px;
+    color:var(--text);
+  }
+  .section-sub{
+    color:var(--muted);
+    font-size:0.98rem;
+    margin-bottom:36px;
+    max-width:42ch;
+  }
+
+  /* ---------- Stepper (mechanism + roadmap) ---------- */
+  .stepper{
+    display:flex;
+    flex-direction:column;
+  }
+  .step{
+    display:flex;
+    gap:18px;
+    position:relative;
+    padding-bottom:36px;
+  }
+  .step:last-child{padding-bottom:0;}
+  .step-rail{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    flex-shrink:0;
+  }
+  .step-icon{
+    width:44px; height:44px;
+    border-radius:50%;
+    border:1px solid var(--cyan-dim);
+    display:flex; align-items:center; justify-content:center;
+    background:radial-gradient(circle, rgba(63,217,255,0.08), transparent 70%);
+    box-shadow:0 0 14px rgba(63,217,255,0.18);
+    flex-shrink:0;
+  }
+  .step-icon svg{width:20px; height:20px; stroke:var(--cyan); fill:none; stroke-width:1.6;}
+  .step-line{
+    width:1px;
+    flex:1;
+    background:linear-gradient(var(--cyan-dim), transparent);
+    margin-top:6px;
+  }
+  .step-body h3{
+    font-size:1.02rem;
+    font-weight:600;
+    color:var(--text);
+    margin-bottom:6px;
+  }
+  .step-body p{
+    font-size:0.93rem;
+    color:var(--muted);
+  }
+
+  .mechanism-close{
+    margin-top:8px;
+    padding-top:28px;
+    border-top:1px solid rgba(255,255,255,0.06);
+    color:var(--muted-dim);
+    font-size:0.9rem;
+    line-height:1.7;
+  }
+
+  /* ---------- Two paths ---------- */
+  .paths-intro{
+    color:var(--muted);
+    margin-bottom:30px;
+    font-size:0.98rem;
+  }
+  .path-card{
+    border-radius:10px;
+    padding:22px;
+    margin-bottom:16px;
+  }
+  .path-a{
+    background:rgba(255,255,255,0.02);
+    border:1px solid rgba(255,255,255,0.06);
+    color:var(--muted-dim);
+  }
+  .path-a h3{color:var(--muted); font-size:1rem; margin-bottom:6px; font-weight:600;}
+  .path-a p{font-size:0.92rem;}
+  .path-b{
+    background:linear-gradient(160deg, rgba(63,217,255,0.09), rgba(63,217,255,0.02));
+    border:1px solid var(--cyan-dim);
+    box-shadow:0 0 30px rgba(63,217,255,0.12);
+  }
+  .path-b h3{
+    color:var(--cyan);
+    font-size:1rem;
+    margin-bottom:6px;
+    font-weight:600;
+    text-shadow:0 0 12px rgba(63,217,255,0.4);
+  }
+  .path-b p{font-size:0.92rem; color:#c7dde3;}
+
+  .roadmap-close{
+    text-align:center;
+    color:var(--muted-dim);
+    font-size:0.88rem;
+    margin-top:8px;
+  }
+
+  /* ---------- Risk disclosure ---------- */
+  .disclosure{
+    background:none;
+    border-top:1px solid rgba(255,255,255,0.06);
+    border-bottom:1px solid rgba(255,255,255,0.06);
+    padding:32px 24px;
+  }
+  .disclosure p{
+    color:var(--muted-dim);
+    font-size:0.85rem;
+    line-height:1.7;
+    max-width:44ch;
+    margin:0 auto;
+  }
+
+  /* ---------- CTA ---------- */
+  .cta-section{
+    text-align:center;
+    padding-bottom:120px;
+  }
+  .cta-btn{
+    display:block;
+    width:100%;
+    text-decoration:none;
+    background:var(--cyan);
+    color:#00181c;
+    font-family:'Space Grotesk',sans-serif;
+    font-weight:700;
+    font-size:1.08rem;
+    padding:18px 24px;
+    border-radius:10px;
+    box-shadow:0 0 30px rgba(63,217,255,0.4), 0 0 60px rgba(63,217,255,0.15);
+    transition:transform 0.15s ease, box-shadow 0.15s ease;
+  }
+  .cta-btn:active{
+    transform:scale(0.98);
+    box-shadow:0 0 18px rgba(63,217,255,0.3);
+  }
+  .cta-micro{
+    margin-top:16px;
+    color:var(--muted-dim);
+    font-size:0.85rem;
+  }
+
+  /* ---------- Scroll reveal ---------- */
+  .reveal{
+    opacity:0;
+    transform:translateY(18px);
+    transition:opacity 0.7s cubic-bezier(0.16,1,0.3,1), transform 0.7s cubic-bezier(0.16,1,0.3,1);
+  }
+  .reveal.is-visible{
+    opacity:1;
+    transform:translateY(0);
+  }
+
+  /* ---------- Sticky mini CTA ---------- */
+  .sticky-cta{
+    position:fixed;
+    left:0; right:0; bottom:0;
+    z-index:40;
+    padding:12px 16px;
+    padding-bottom:calc(12px + env(safe-area-inset-bottom));
+    background:rgba(5,7,8,0.88);
+    backdrop-filter:blur(10px);
+    -webkit-backdrop-filter:blur(10px);
+    border-top:1px solid rgba(63,217,255,0.18);
+    transform:translateY(110%);
+    transition:transform 0.35s ease;
+    display:flex;
+    align-items:center;
+    gap:12px;
+  }
+  .sticky-cta.is-shown{transform:translateY(0);}
+  .sticky-cta-label{
+    flex:1;
+    font-size:0.82rem;
+    color:var(--muted);
+    line-height:1.3;
+  }
+  .sticky-cta-btn{
+    flex-shrink:0;
+    text-decoration:none;
+    background:var(--cyan);
+    color:#00181c;
+    font-family:'Space Grotesk',sans-serif;
+    font-weight:700;
+    font-size:0.92rem;
+    padding:12px 18px;
+    border-radius:8px;
+    box-shadow:0 0 18px rgba(63,217,255,0.35);
+    white-space:nowrap;
+  }
+  @media (prefers-reduced-motion: reduce){
+    html{scroll-behavior:auto;}
+    .cta-btn{transition:none;}
+    .reveal{opacity:1; transform:none; transition:none;}
+    .sticky-cta{transition:none;}
+  }
+</style>
+</head>
+<body>
+
+<section class="hero">
+  <h1>DarviX AI<span>Engine</span></h1>
+  <p>An automated XAUUSD trading system — momentum + key-level strategy, rule-based execution, zero manual guesswork.</p>
+  <div class="tag">No signals to interpret. No manual entries.</div>
+</section>
+
+<section id="how-it-works" class="reveal">
+  <div class="section-head">How it actually works</div>
+  <div class="section-sub">No black box. Here's the actual process, step by step.</div>
+
+  <div class="stepper">
+    <div class="step">
+      <div class="step-rail">
+        <div class="step-icon">
+          <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="6"/><line x1="20" y1="20" x2="15.5" y2="15.5"/></svg>
+        </div>
+        <div class="step-line"></div>
+      </div>
+      <div class="step-body">
+        <h3>Scans the market</h3>
+        <p>Continuously reads XAUUSD price action for momentum shifts and key price levels.</p>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-rail">
+        <div class="step-icon">
+          <svg viewBox="0 0 24 24"><path d="M4 15a8 8 0 1 1 16 0"/><line x1="12" y1="15" x2="15.5" y2="10.5"/></svg>
+        </div>
+        <div class="step-line"></div>
+      </div>
+      <div class="step-body">
+        <h3>Scores the setup</h3>
+        <p>Every potential trade is checked against a confidence threshold. Low-probability setups are discarded automatically.</p>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-rail">
+        <div class="step-icon">
+          <svg viewBox="0 0 24 24"><polygon points="13 2 3 14 11 14 9 22 21 10 13 10 13 2"/></svg>
+        </div>
+        <div class="step-line"></div>
+      </div>
+      <div class="step-body">
+        <h3>Executes only high-probability trades</h3>
+        <p>No manual override, no emotion, no second-guessing mid-trade.</p>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-rail">
+        <div class="step-icon">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+        </div>
+      </div>
+      <div class="step-body">
+        <h3>Manages the trade automatically</h3>
+        <p>Entries, stop adjustments, and exits follow the same fixed rule set.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="mechanism-close">
+    This exact process has been trading live on XAUUSD for the past year — a private tool, not previously offered publicly. That means we haven't published performance reports before now, which means there's no polished track record to hand you. What we can offer instead is direct access to watch it work.
+  </div>
+</section>
+
+<section id="two-paths" class="reveal">
+  <div class="section-head">Two paths from here</div>
+  <div class="paths-intro">You now know how the engine works. What you do with that is the only thing left to decide.</div>
+
+  <div class="path-card path-a">
+    <h3>Path A — Close this page</h3>
+    <p>Nothing happens. You're exactly where you started.</p>
+  </div>
+
+  <div class="path-card path-b">
+    <h3>Path B — Verify it yourself</h3>
+    <p>Not everyone will. This path is for the smaller group willing to watch the system work before deciding anything — not just read about it.</p>
+  </div>
+</section>
+
+<section id="path-b-steps" class="reveal">
+  <div class="section-head">What happens if you choose Path B</div>
+
+  <div class="stepper">
+    <div class="step">
+      <div class="step-rail">
+        <div class="step-icon">
+          <svg viewBox="0 0 24 24"><path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7-11-7-11-7z"/><circle cx="12" cy="12" r="3"/></svg>
+        </div>
+        <div class="step-line"></div>
+      </div>
+      <div class="step-body">
+        <h3>Start your 5-day free trial</h3>
+        <p>No reports. No reels. Just the trades. Install the engine, activate your trial, and watch it place and manage trades automatically on your own demo or live account. No screenshots, no cherry-picked history — what you see is the system's actual, current behavior. Judge it on that, not on what we tell you.</p>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-rail">
+        <div class="step-icon">
+          <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        </div>
+      </div>
+      <div class="step-body">
+        <h3>If it's a fit, we talk next steps</h3>
+        <p>Your trial application also puts you in line for the Profit Sharing Program — no second form. If the system performs the way you'd want over those 5 days, we review your goals, risk tolerance, and capital size together and see if profit-sharing makes sense for you or not.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="roadmap-close">That's it. Two steps, one application.</div>
+</section>
+
+<div class="disclosure reveal">
+  <p>Trading carries risk, including loss of capital. DarviX AI Engine does not guarantee profit, and nothing you observe during your trial is a promise of future performance. Apply only with capital you're prepared to risk.</p>
+</div>
+
+<section class="cta-section reveal" id="final-cta">
+  <a class="cta-btn" href="https://t.me/theegreatdavid?text=Hello%20Sir%20David,%20I%20want%20to%20apply%20for%20my%20Free%20Trial.">Apply for Free Trial</a>
+  <div class="cta-micro">Answer 3 quick questions to see if you're a fit.</div>
+</section>
+
+<div class="sticky-cta" id="stickyCta">
+  <div class="sticky-cta-label">Watch it trade before you decide.</div>
+  <a class="sticky-cta-btn" href="https://t.me/theegreatdavid?text=Hello%20Sir%20David,%20I%20want%20to%20apply%20for%20my%20Free%20Trial.">Apply for Trial</a>
+</div>
+
+<script>
+(function(){
+  var prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // ---- Scroll reveal: each section performs its own single reveal once ----
+  var revealEls = document.querySelectorAll('.reveal');
+  if('IntersectionObserver' in window && !prefersReducedMotion){
+    var revealObserver = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        if(entry.isIntersecting){
+          entry.target.classList.add('is-visible');
+          revealObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.18, rootMargin: '0px 0px -40px 0px' });
+    revealEls.forEach(function(el){ revealObserver.observe(el); });
+  } else {
+    revealEls.forEach(function(el){ el.classList.add('is-visible'); });
+  }
+
+  // ---- Sticky mini-CTA: appears once past the hero, hides once the ----
+  // ---- real CTA section is reached so there's never a duplicate ask ----
+  var hero = document.querySelector('.hero');
+  var finalCta = document.getElementById('final-cta');
+  var stickyCta = document.getElementById('stickyCta');
+
+  if('IntersectionObserver' in window && hero && finalCta && stickyCta){
+    var pastHero = false;
+    var atFinalCta = false;
+
+    function syncStickyCta(){
+      stickyCta.classList.toggle('is-shown', pastHero && !atFinalCta);
+    }
+
+    var heroObserver = new IntersectionObserver(function(entries){
+      pastHero = !entries[0].isIntersecting;
+      syncStickyCta();
+    }, { threshold: 0 });
+    heroObserver.observe(hero);
+
+    var finalCtaObserver = new IntersectionObserver(function(entries){
+      atFinalCta = entries[0].isIntersecting;
+      syncStickyCta();
+    }, { threshold: 0.3 });
+    finalCtaObserver.observe(finalCta);
+  }
+})();
+</script>
+
+</body>
+</html>
