@@ -41,13 +41,14 @@
 
   /* ---------- Hero ---------- */
   .hero{
-    min-height:92vh;
+    min-height:auto;
     display:flex;
     flex-direction:column;
-    justify-content:center;
+    justify-content:flex-start;
     align-items:flex-start;
     text-align:left;
-    padding-top:40px;
+    padding-top:56px;
+    padding-bottom:16px;
   }
   .hero::before{
     content:"";
@@ -82,6 +83,19 @@
     color:var(--muted-dim);
     border-left:2px solid var(--cyan-dim);
     padding-left:12px;
+  }
+  .hero-visual{
+    width:100%;
+    margin-top:40px;
+    border-radius:14px;
+    overflow:hidden;
+    border:1px solid rgba(63,217,255,0.18);
+    box-shadow:0 0 40px rgba(63,217,255,0.14);
+  }
+  .hero-visual img{
+    display:block;
+    width:100%;
+    height:auto;
   }
 
   /* ---------- Section headers ---------- */
@@ -297,6 +311,9 @@
   <h1>DarviX AI<span>Engine</span></h1>
   <p>An automated XAUUSD trading system — momentum + key-level strategy, rule-based execution, zero manual guesswork.</p>
   <div class="tag">No signals to interpret. No manual entries.</div>
+  <div class="hero-visual">
+    <img src="darvix-hero.jpg" alt="DarviX AI Engine — abstract visualization of the AI engine reading XAUUSD price data" loading="eager">
+  </div>
 </section>
 
 <section id="how-it-works" class="reveal">
